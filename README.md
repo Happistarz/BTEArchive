@@ -42,3 +42,53 @@ Pour chaque ville, faire un nombre d'onglet correspondant au nombre de warp, cha
 Connexion API [minotar](https://minotar.net/)
 pour avoir une representation graphique des joueurs
 https://minotar.net/armor/body/user/100.png changer 'user' par l'input du joueur/uuid
+
+---
+Page d'acceuil:
+Affichage de tout les projets
+filtres: ETAT, REGION, NB DE BUILDEUR
+affichage par card en grid de 3 en horizontal et 10 en verticale qu'on peut etendre
+btn pour charger plus
+
+---
+Page Liste: 
+liste les pages trouvés par NOM, INSEE, CODEP
+TYPE DE PAGE: Commune, Warp, Projet du type montagne, station, gare, etc
+
+---
+Page Projet:
+COORDS
+warps,
+buildeurs
+banner du DEP
+
+---
+Page Commune:
+banner du DEP
+carte google map
+info de la ville
+liste des warps + nb warp
+nb de buildeur + liste des buildeurs,
+
+---
+# ORGA TABLE
+BUILDEUR:
+ID
+IDPROJET
+NOM
+URLICON
+
+PROJET:
+ID
+TYPE (COMMUNE, PROJET, WARP)
+NOM
+DESC
+COORDS
+REGION
+ETAT
+DATE
+
+WARP:
+IDPROJET
+NOM
+TYPE (PRINCPAL, SECONDAIRE)
