@@ -22,3 +22,10 @@ exemple:
 REGION: 86
 ensuite faire un dict de code => display nom
 et fetch l'image de la region et la mettre en banner du projet quand on va sur la page
+
+---
+pour le cache:
+ne pas mettre en cache les pages de villes car sinon les nouvelles modifs sont pas visibles pendant x temps
+juste mettre en cache le result du query/exec pendant - de 10min (a voir)
+[php cache exemple](https://www.sitepoint.com/php-cache/)
+utiliser apc_store() et apc_fetch()
