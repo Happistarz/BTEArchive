@@ -34,3 +34,11 @@ utiliser apc_store() et apc_fetch()
 Apres la validation de la creation, request sur ce site [geo api gouv](https://geo.api.gouv.fr/decoupage-administratif/communes) pour les stocké dans la bdd
 requete complete des infos qu'il faudrait : 'https://geo.api.gouv.fr/communes?nom=Versailles&fields=code,nom,mairie,siren,codeDepartement,departement,codeRegion,codesPostaux,population,region'
 on peut rechercher par COORD, NOM, DEP et mix
+
+---
+Pour chaque ville, faire un nombre d'onglet correspondant au nombre de warp, chaque onglet aura des images et les buildeurs associés.
+
+---
+Connexion API [minotar](https://minotar.net/)
+pour avoir une representation graphique des joueurs
+https://minotar.net/armor/body/user/100.png changer 'user' par l'input du joueur/uuid
