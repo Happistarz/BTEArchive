@@ -27,5 +27,10 @@ function convertDESC($content, $limit)
   return $content;
 }
 
+function getSeparator()
+{
+  return "<hr style='width:65%;background-color:blue'/>";
+}
+
 
 ?>

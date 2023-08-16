@@ -11,6 +11,15 @@ define(
   )
 );
 
+define(
+  "TYPE_PROJET",
+  array(
+    0 => 'COMMUNE',
+    1 => 'PROJET',
+    2 => 'WARP'
+  )
+);
+
 class Liste extends Connexion
 {
   public function __construct()
@@ -19,7 +28,7 @@ class Liste extends Connexion
   }
   public function getProjets($condition = null)
   {
-    $res = $this->read("PROJET", $condition, "DATE DESC");
+    $res = $this->read("PROJET", $condition);
     return $res;
   }
   public function getProjetsByRegion($region)

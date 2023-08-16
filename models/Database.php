@@ -71,22 +71,11 @@ class Connexion
    * @param int $limit
    * @return array
    */
-  public function read($table, $conditions = [], $orderBy = null, $limit = null)
+  public function read($table, $conditions = "1=1", $orderBy = null, $limit = null)
   {
-    $where = '';
+    $where = ' WHERE ' . $conditions;
     $params = [];
 
-    if (!empty($conditions)) {
-      $where = ' WHERE ';
-      $conditionsArr = [];
-
-      foreach ($conditions as $field => $value) {
-        $conditionsArr[] = "{$field} = ?";
-        $params[] = $value;
-      }
-
-      $where .= implode(' AND ', $conditionsArr);
-    }
 
     $order = '';
     if ($orderBy) {
@@ -100,6 +89,7 @@ class Connexion
 
     $sql = "SELECT * FROM {$table}{$where}{$order}{$lim}";
 
+    echo $sql;
     try {
       $stmt = $this->db->prepare($sql);
       $stmt->execute($params);
@@ -108,7 +98,6 @@ class Connexion
       die("Read operation failed: " . $e->getMessage());
     }
   }
-
   /**
    * Update records
    * 

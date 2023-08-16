@@ -14,9 +14,8 @@ require('models/functions.php') ?>
   require('vue/header.php');
 
   $l = new Liste();
-
-  $projets = $l->getProjets();
-
+  $search = $_GET['search'];
+  $projets = $l->getProjets("NOM LIKE '%$search%' OR REGION LIKE '%$search%'");
   ?>
   <main class="listemain">
     <?php
@@ -38,7 +37,7 @@ require('models/functions.php') ?>
           </a>";
       }
     }
-    echo join("<hr style='width:65%;background-color:gray'/>", $doc)
+    echo join(getSeparator(), $doc)
       ?>
   </main>
 </body>
