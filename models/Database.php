@@ -1,6 +1,29 @@
 <?php
 # CRUD Database
 
+define(
+  "TYPE_PROJET",
+  array(
+    0 => 'COMMUNE',
+    1 => 'PROJET',
+    2 => 'WARP'
+  )
+);
+
+define(
+  "ETAT",
+  array(
+    1 => "Démarrage",
+    2 => "En cours",
+    3 => "Avancé",
+    4 => "Terminé",
+  )
+);
+
+define('PROJET_TABLE', 'PROJET');
+
+
+define('WARP_TABLE', "WARPS");
 /**
  * Connexion class
  * 

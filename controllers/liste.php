@@ -1,24 +1,6 @@
 <?php
 require('models/Database.php');
 
-define(
-  "ETAT",
-  array(
-    1 => "Démarrage",
-    2 => "En cours",
-    3 => "Avancé",
-    4 => "Terminé",
-  )
-);
-
-define(
-  "TYPE_PROJET",
-  array(
-    0 => 'COMMUNE',
-    1 => 'PROJET',
-    2 => 'WARP'
-  )
-);
 
 class Liste extends Connexion
 {

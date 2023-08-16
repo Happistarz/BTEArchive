@@ -400,6 +400,17 @@ header .right-header {
   margin: 10px 0;
 }
 
+.infocreation .item textarea {
+  font-size: 20px;
+  background-color: #ebebeb;
+  border: none;
+  /* border-radius: 1.4rem; */
+  padding: 15px 20px;
+  width: 60%;
+  height: 100px;
+  margin: 10px 0;
+}
+
 .infocreation select {
   font-size: 20px;
   background-color: #ebebeb;
@@ -423,7 +434,8 @@ header .right-header {
   min-height: 100px;
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -434,10 +446,9 @@ header .right-header {
   justify-content: center;
   padding: 10px;
   background: #b3d4fc;
-  width: 130px;
   height: 50px;
   color: white;
-  border-radius: 1.625rem;
+  border-radius: 1.625rem 1rem 1.625rem 1.625rem;
 }
 
 .builder img {

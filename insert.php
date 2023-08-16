@@ -1,29 +1,7 @@
 <?php
 require 'models/functions.php';
+require 'models/DataBase.php';
 # Init a cURL session
-$curl = curl_init("https://geo.api.gouv.fr/communes?nom=Poitiers&fields=code,nom,mairie,siren,codeDepartement,departement,codeRegion,codesPostaux,population,region");
-
-# Set options on the session
-curl_setopt_array($curl, [
-  CURLOPT_CAINFO => dirname(__FILE__) . '/geo_cert.crt',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_TIMEOUT_MS => 2000
-]);
-
-# exec the session and get the results
-$data = curl_exec($curl);
-if ($data === false) {
-  var_dump(curl_error($curl));
-} else if (curl_getinfo($curl, CURLINFO_HTTP_CODE) === 200) {
-  # decode the json string to an object
-  $data = json_decode($data, true);
-  // print_r($data);
-} else {
-  var_dump(curl_getinfo($curl, CURLINFO_HTTP_CODE));
-}
-
-# close the session
-curl_close($curl);
 
 function convertGEO($data)
 {
@@ -69,17 +47,21 @@ function convertGEO($data)
   require('vue/header.php'); ?>
   <main class='insertmain'>
     <h1 style='margin:50px 0;font-size: 40px;'>Création du projet</h1>
-    <form action="" method="post">
+    <form method="post" id='insertform'>
       <div class="infocreation">
 
         <div class="type">
-          <input type="button" value="Commune" class='btnactive'>
-          <input type="button" value="Projet">
-          <input type="button" value="Warp">
+          <input type="button" value="COMMUNE" class='btnactive'>
+          <input type="button" value="PROJET">
+          <input type="button" value="WARP">
         </div>
         <div class="item">
           <label for="nom" id='labelnom'>Nom de la Commune</label>
           <input type="text" name="nom" id="nom" placeholder="Nom de la Commune">
+        </div>
+        <div class="item">
+          <label for="labeldesc">Description</label>
+          <textarea name="desc" id="desc" cols="30" rows="10" placeholder='Description'></textarea>
         </div>
         <div class="item">
           <label for="warp" id='labelwarp'>Nom du Warp</label>
@@ -102,14 +84,10 @@ function convertGEO($data)
           <input type="text" name="builder" id="builder" placeholder="Nom sur Minecraft">
         </div>
         <div class='listebuilder'>
-          <div class='builder'>
-            <img src="https://minotar.net/helm/FuzeIII/100.png" alt="">
-            <p>FuzeIII</p>
-            <span>X</span>
-          </div>
+          <p id="default"><u><i>Pas de Builder ajoutée...</i></u></p>
         </div>
       </div>
-      <input type="submit" value="submit">
+      <input type="submit" value="Valider">
     </form>
   </main>
 </body>
@@ -142,8 +120,8 @@ function convertGEO($data)
   })
   warp_btn.addEventListener('click', () => {
     nom.innerHTML = 'Nom du Warp';
-    nom.setAttribute('placeholder', 'Nom du Projet');
-    labelnom.innerHTML = 'Nom du Projet';
+    nom.setAttribute('placeholder', 'Nom du Warp');
+    labelnom.innerHTML = 'Nom du Warp';
     list.forEach(element => {
       element == warp_btn ? element.classList.add('btnactive') : element.classList.remove('btnactive');
     });
@@ -154,7 +132,79 @@ function convertGEO($data)
       return;
     }
     let re = nom.value.replace(/[^a-zA-z_]+/gi, '');
-    warp.setAttribute('placeholder', re);
+    warp.value = re;
+    // warp.setAttribute('placeholder', re);
+  });
+
+  ///// BUILDER SECTION /////
+
+  var builderinput = document.querySelector('#builder');
+  var listebuilder = [];
+  var builderform = document.querySelector('#builderform');
+
+  builderinput.onkeydown = function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      if (builderinput.value.length == 0) {
+        return;
+      }
+      let re = builderinput.value.replace(/[^a-zA-Z0-9_]+/gi, '');
+
+      // Ajouter les données au format JSON à la liste
+      listebuilder.push({
+        buildernom: re,
+        buildericon: `https://minotar.net/helm/${re}/100.png`
+      });
+
+
+      isEmptyBuilder();
+
+      let builder = document.createElement('div');
+      builder.classList.add('builder');
+      builder.innerHTML = `<img src="https://minotar.net/helm/${re}/100.png" alt=""><p>${re}</p><span onclick="deleteEL(this);">X</span>`;
+      document.querySelector('.listebuilder').appendChild(builder);
+      builderinput.value = '';
+    }
+  }
+
+  // Fonction pour supprimer un élément de la liste
+  function deleteEL(el) {
+    const index = Array.from(el.parentNode.parentNode.children).indexOf(el.parentNode);
+
+    // Supprimer l'élément de la liste
+    listebuilder.splice(index, 1);
+
+    // Supprimer l'élément HTML de la liste
+    el.parentNode.remove();
+
+    isEmptyBuilder();
+  }
+
+  function isEmptyBuilder() {
+    listebuilder.length == 0 ? document.querySelector('#default').style.display = 'block' : document.querySelector('#default').style.display = 'none';
+  }
+
+  document.querySelector("#insertform").addEventListener('submit', (e) => {
+    e.preventDefault();
+    let form = document.querySelector('#insertform');
+    let data = new FormData(form);
+
+    data.append('type', document.querySelector('.type .btnactive').value);
+
+    console.log(listebuilder);
+    for (let index = 0; index < listebuilder.length; index++) {
+      data.append(index, JSON.stringify(listebuilder[index]));
+    }
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'enregistrement.php', true);
+    xhr.onload = function () {
+      if (this.status == 200) {
+        console.log(this.responseText);
+        // window.location.href = 'index.php';
+      }
+    }
+    xhr.send(data);
   })
 </script>
 
