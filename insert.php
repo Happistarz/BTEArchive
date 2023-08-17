@@ -3,13 +3,7 @@ require 'models/functions.php';
 require 'models/DataBase.php';
 # Init a cURL session
 
-function convertGEO($data)
-{
-  $code = $data['departement']['code'];
-  $name = join("-", explode(" ", strtolower($data['departement']['nom'])));
-  $src = $code . "-logo-" . $name . ".png";
-  echo "<img src='src/LOGODEPFR/icones-300px/$src' />";
-}
+
 // convertGEO($data[0]);
 
 // $source = "cache/" . uniqid("icon") . ".png";
@@ -57,7 +51,8 @@ function convertGEO($data)
         </div>
         <div class="item">
           <label for="nom" id='labelnom'>Nom de la Commune</label>
-          <input type="text" name="nom" id="nom" placeholder="Nom de la Commune">
+          <input type="text" name="nom" id="nom" placeholder="Nom de la Commune" required>
+          <input type="text" name="dep" id="dep" placeholder="Numéro du département" required>
         </div>
         <div class="item">
           <label for="labeldesc">Description</label>
@@ -65,7 +60,7 @@ function convertGEO($data)
         </div>
         <div class="item">
           <label for="warp" id='labelwarp'>Nom du Warp</label>
-          <input type="text" name="warp" id="warp" placeholder='Nom du warp'>
+          <input type="text" name="warp" id="warp" placeholder='Nom du warp' required>
         </div>
 
         <div class="item">
@@ -81,7 +76,7 @@ function convertGEO($data)
       <div class='infocreation buildercreation'>
         <div class="item">
           <label for="builder">Ajouter un buildeur à la liste</label>
-          <input type="text" name="builder" id="builder" placeholder="Nom sur Minecraft">
+          <input type="text" name="builder" id="builder" placeholder="Nom sur Minecraft" required>
         </div>
         <div class='listebuilder'>
           <p id="default"><u><i>Pas de Builder ajoutée...</i></u></p>
@@ -200,8 +195,12 @@ function convertGEO($data)
     xhr.open('POST', 'enregistrement.php', true);
     xhr.onload = function () {
       if (this.status == 200) {
-        console.log(this.responseText);
-        // window.location.href = 'index.php';
+        var result = this.responseText
+        if (result.success) {
+          // window.location.href = 'index.php';
+        } else {
+          alert('Erreur lors de la création... Veuillez contacter le support sur discord.');
+        }
       }
     }
     xhr.send(data);

@@ -13,13 +13,14 @@ define(
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-  $nom = $_POST['nom'];
-  $desc = $_POST['desc'];
-  $etat = $_POST['etat'];
-  $warp = $_POST['warp'];
-  $type = (int) PROJET_TYPE[$_POST['type']];
+  $nom = htmlspecialchars($_POST['nom']);
+  $desc = htmlspecialchars($_POST['desc']);
+  $etat = htmlspecialchars($_POST['etat']);
+  $warp = htmlspecialchars($_POST['warp']);
+  $type = PROJET_TYPE[$_POST['type']];
 
-  // cURL SESSION
+  //// cURL SESSION
+
   $curl = curl_init("https://geo.api.gouv.fr/communes?nom=Poitiers&fields=code,nom,mairie,centre,siren,codeDepartement,departement,codeRegion,codesPostaux,population,region");
 
   # Set options on the session
@@ -47,17 +48,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $coords = $data[0]['centre']['coordinates'][0] . "," . $data[0]['centre']['coordinates'][1];
   $deparement = $data[0]['codeDepartement'];
 
+  //////// CREER UNE NOUVELLE TABLE QUI CONTIENT: 
+  /*RelationPB:
+    ID
+    IDPROJET
+    IDBUILDEUR
 
+  permet de joindre une relation N:N 
+  pour x builder-> x projet
+  pour x projet-> x builder
+  */
+
+  //// CREATION DU PROJET
 
   $projet = new Projet($nom, $desc, $type, $coords, $deparement, $etat, date("Y-m-d"));
   $id = $projet->insertProject();
 
+  //// CREATION DU WARP
 
-  // for ($i = 0; $i < $_POST[$i]; $i++) {
-  //   $BNOM = $_POST[$i]['buildernom'];
-  //   $BICON = $_POST[$i]['buildericon'];
-  //   $sql = "INSERT INTO `BUILDER` (`idproject`, `nom`, `icon`) VALUES ($id, '$BNOM', '$BICON')";
-  // }
+  $warp = new Warp($id,$warp,$coords);
+  $warp->insertWarp();
+
+  //// CREATION DES BUILDERS
+
   for ($i = 0; $i < count($_POST); $i++) {
     if (isset($_POST[$i])) {
       $builder = json_decode($_POST[$i], true);
@@ -71,8 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
 
-
-  print_r($_POST);
+  echo '{success: true}';
+  echo '{success:false}';
 
   // header("Location: view.php?id=$name");
   // header("Location: index.php");

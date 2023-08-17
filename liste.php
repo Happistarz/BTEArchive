@@ -26,6 +26,7 @@ require('models/functions.php') ?>
 
       foreach ($projets as $projet) {
         $warps = $l->count("WARPS", "idPROJET", $projet['ID']);
+        $builders = $l->count('BUILDEUR',"idPROJET",$projet['ID']);
         $doc[] = "
       <a href='#' class=\"searchcard\">
         <img src=\"src/voulon.png\" alt=\"\">
@@ -33,6 +34,7 @@ require('models/functions.php') ?>
           <h1>" . $projet['NOM'] . "   <i class='compact-item'><strong>" . $projet['REGION'] . "</strong></i> • <i class='compact-item'>" . ETAT[$projet['ETAT']] . "</i></h1>
           <p>" . convertDESC($projet['DESC'], 200) . "</p>
           <p class='PROJET-TAG'>Warps: $warps</p>
+          <p class=''>
           </div>
           </a>";
       }
