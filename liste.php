@@ -1,5 +1,5 @@
 <?php require('controllers/liste.php');
-require('models/functions.php') ?>
+require_once('models/functions.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +15,7 @@ require('models/functions.php') ?>
 
   $l = new Liste();
   $search = $_GET['search'];
-  $projets = $l->getProjets("NOM LIKE '%$search%' OR REGION LIKE '%$search%'");
+  $projets = $l->getProjets("NOM LIKE '%$search%'");
   ?>
   <main class="listemain">
     <?php
@@ -26,16 +26,18 @@ require('models/functions.php') ?>
 
       foreach ($projets as $projet) {
         $warps = $l->count("WARPS", "idPROJET", $projet['ID']);
-        $builders = $l->count('BUILDEUR',"idPROJET",$projet['ID']);
+        $builders = $l->count('BUILDEUR', "idPROJET", $projet['ID']);
         $doc[] = "
-      <a href='#' class=\"searchcard\">
-        <img src=\"src/voulon.png\" alt=\"\">
-        <div class=\"text\">
-          <h1>" . $projet['NOM'] . "   <i class='compact-item'><strong>" . $projet['REGION'] . "</strong></i> • <i class='compact-item'>" . ETAT[$projet['ETAT']] . "</i></h1>
-          <p>" . convertDESC($projet['DESC'], 200) . "</p>
-          <p class='PROJET-TAG'>Warps: $warps</p>
-          <p class=''>
-          </div>
+          <a href='view?p=" . $projet["ID"] . "' class=\"searchcard\">
+            <img src=\"src/voulon.png\" alt=\"\">
+            <div class=\"text\">
+              <h1>" . $projet['NOM'] . "   <i class='compact-item'><strong>" . $projet['DEPARTEMENT'] . "</strong></i> • <i class='compact-item'>" . ETAT[$projet['ETAT']] . "</i></h1>
+              <p>" . convertDESC($projet['DESCRI'], 200) . "</p>
+              <div style='display:flex;flex-direction:row;width:100%;gap:20px'>
+                <p class='PROJET-TAG'>Warps: $warps</p>
+                <p class='PROJET-TAG'>Builders: $builders</p>
+              </div>
+            </div>
           </a>";
       }
     }

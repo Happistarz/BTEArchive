@@ -1,5 +1,5 @@
 <?php
-require "models/Database.php";
+require_once("models/Database.php");
 
 class Builder extends Connexion
 {
@@ -30,21 +30,32 @@ class Builder extends Connexion
     $this->id = $id;
   }
 
-  public function insertBuilder()
+  public function insertBuilder(): int
   {
-    return parent::create(
-      "BUILDEUR",
+    $builder = parent::read(
+      BUILDER_TABLE,
       array(
         "NOM" => $this->name,
-        "ICONURL" => $this->icon
       )
     );
+    if ($builder) {
+      $id = (int) $builder[0]["ID"];
+    } else {
+      $id = parent::create(
+        BUILDER_TABLE,
+        array(
+          "NOM" => $this->name,
+          "ICONURL" => $this->icon,
+        )
+      );
+    }
+    return $id;
   }
 
   public function deleteBuilder()
   {
     return parent::delete(
-      "BUILDEUR",
+      BUILDER_TABLE,
       array(
         "ID" => $this->id
       )
@@ -54,7 +65,7 @@ class Builder extends Connexion
   public function updateBuilder()
   {
     return parent::update(
-      "BUILDEUR",
+      BUILDER_TABLE,
       array(
         "NOM" => $this->name,
         "ICONURL" => $this->icon

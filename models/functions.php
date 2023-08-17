@@ -29,7 +29,7 @@ function convertDESC($content, $limit)
 
 function getSeparator()
 {
-  return "<hr style='width:65%;background-color:blue'/>";
+  return "<hr style='width:65%;background-color:blue;height:2px'/>";
 }
 
 function convertGEO($data)

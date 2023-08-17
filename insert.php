@@ -52,7 +52,7 @@ require 'models/DataBase.php';
         <div class="item">
           <label for="nom" id='labelnom'>Nom de la Commune</label>
           <input type="text" name="nom" id="nom" placeholder="Nom de la Commune" required>
-          <input type="text" name="dep" id="dep" placeholder="Numéro du département" required>
+          <input type="text" name="dep" id="dep" placeholder="Numéro du département" style="width:50%" required>
         </div>
         <div class="item">
           <label for="labeldesc">Description</label>
@@ -76,7 +76,7 @@ require 'models/DataBase.php';
       <div class='infocreation buildercreation'>
         <div class="item">
           <label for="builder">Ajouter un buildeur à la liste</label>
-          <input type="text" name="builder" id="builder" placeholder="Nom sur Minecraft" required>
+          <input type="text" name="builder" id="builder" placeholder="Nom sur Minecraft">
         </div>
         <div class='listebuilder'>
           <p id="default"><u><i>Pas de Builder ajoutée...</i></u></p>
@@ -185,6 +185,7 @@ require 'models/DataBase.php';
     let data = new FormData(form);
 
     data.append('type', document.querySelector('.type .btnactive').value);
+    data.append('REQUEST', true);
 
     console.log(listebuilder);
     for (let index = 0; index < listebuilder.length; index++) {
@@ -195,9 +196,10 @@ require 'models/DataBase.php';
     xhr.open('POST', 'enregistrement.php', true);
     xhr.onload = function () {
       if (this.status == 200) {
-        var result = this.responseText
+        var result = JSON.parse(this.responseText);
         if (result.success) {
           // window.location.href = 'index.php';
+          window.location.href = 'view.php?p=' + result.id;
         } else {
           alert('Erreur lors de la création... Veuillez contacter le support sur discord.');
         }

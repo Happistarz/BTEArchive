@@ -1,5 +1,5 @@
 <?php
-require('models/Database.php');
+require_once('models/Database.php');
 
 
 class Liste extends Connexion

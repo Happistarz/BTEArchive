@@ -275,8 +275,7 @@ header .right-header {
 
 .searchcard {
   width: 75%;
-  /* background-color: #b3d4fc; */
-  height: 140px;
+  height: 200px;
   padding: 20px;
   border-radius: 1.625rem;
   display: flex;
@@ -294,12 +293,12 @@ header .right-header {
 
 .searchcard:hover {
   transform: translateY(-2px);
-  background-color: #ebebeb;
+  background-color: #f1f1f1;
 }
 
 .searchcard img {
-  width: 130px;
-  height: 130px;
+  width: 200px;
+  height: 180px;
   aspect-ratio: 16/9;
   border-radius: 1.625rem;
 }
@@ -386,7 +385,7 @@ header .right-header {
   display: flex;
   flex-direction: column;
   margin: 20px 0;
-  width: 100%;
+  width: 80%;
 }
 
 .infocreation input[type="text"] {
@@ -395,9 +394,11 @@ header .right-header {
   border: none;
   /* border-radius: 1.4rem; */
   padding: 15px 20px;
-  width: 60%;
+  width: 100%;
   height: 30px;
   margin: 10px 0;
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
 }
 
 .infocreation .item textarea {
@@ -406,9 +407,11 @@ header .right-header {
   border: none;
   /* border-radius: 1.4rem; */
   padding: 15px 20px;
-  width: 60%;
+  width: 80%;
   height: 100px;
   margin: 10px 0;
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
 }
 
 .infocreation select {
@@ -419,6 +422,8 @@ header .right-header {
   padding: 15px 20px;
   width: 62.5%;
   margin: 10px 0;
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
 }
 
 .infocreation select option {

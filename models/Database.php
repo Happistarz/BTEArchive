@@ -22,8 +22,11 @@ define(
 
 define('PROJET_TABLE', 'PROJET');
 
+define('RELATIONPB_TABLE', 'RELATIONPB');
 
 define('WARP_TABLE', "WARPS");
+
+define('BUILDER_TABLE', "BUILDEUR");
 /**
  * Connexion class
  * 
@@ -94,9 +97,13 @@ class Connexion
    * @param int $limit
    * @return array
    */
-  public function read($table, $conditions = "1=1", $orderBy = null, $limit = null)
+  public function read($table, $conditions = array(1 => 1), $orderBy = null, $limit = null)
   {
-    $where = ' WHERE ' . $conditions;
+    $conditionsArr = [];
+    foreach ($conditions as $field => $value) {
+      $conditionsArr[] = "{$field} = '$value'";
+    }
+    $where = ' WHERE ' . implode(' AND ', $conditionsArr);
     $params = [];
 
 
@@ -112,7 +119,7 @@ class Connexion
 
     $sql = "SELECT * FROM {$table}{$where}{$order}{$lim}";
 
-    echo $sql;
+    // echo $sql;
     try {
       $stmt = $this->db->prepare($sql);
       $stmt->execute($params);
@@ -200,6 +207,7 @@ class Connexion
   {
     $sql = "SELECT COUNT(*) FROM {$table} WHERE {$key} = {$value}";
 
+    // echo $sql;
     try {
       $stmt = $this->db->prepare($sql);
       $stmt->execute();
