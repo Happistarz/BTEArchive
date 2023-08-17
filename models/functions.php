@@ -32,5 +32,12 @@ function getSeparator()
   return "<hr style='width:65%;background-color:blue'/>";
 }
 
+function convertGEO($data)
+{
+  $code = $data['departement']['code'];
+  $name = join("-", explode(" ", strtolower($data['departement']['nom'])));
+  $src = $code . "-logo-" . $name . ".png";
+  echo "<img src='src/LOGODEPFR/icones-300px/$src' />";
+}
 
 ?>
