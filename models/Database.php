@@ -27,6 +27,8 @@ define('RELATIONPB_TABLE', 'RELATIONPB');
 define('WARP_TABLE', "WARPS");
 
 define('BUILDER_TABLE', "BUILDEUR");
+
+define('IMAGE_TABLE',"IMAGE");
 /**
  * Connexion class
  * 
@@ -215,6 +217,18 @@ class Connexion
     } catch (PDOException $e) {
       die("Count operation failed: " . $e->getMessage());
     }
+  }
+  /**
+   * Execute normal sql request
+   * 
+   * @param string $sql
+   * 
+   * @return array
+   */
+  public function exec($sql) {
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function close()

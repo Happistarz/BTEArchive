@@ -1,31 +1,9 @@
 <?php
 require 'models/functions.php';
 require 'models/DataBase.php';
-# Init a cURL session
-
 
 // convertGEO($data[0]);
 
-// $source = "cache/" . uniqid("icon") . ".png";
-// $fh = fopen($source, "w");
-// $curl = curl_init("https://minotar.net/helm/FuzeIII/100.png");
-
-// // # Set options on the session
-// curl_setopt_array($curl, [
-//   CURLOPT_CAINFO => dirname(__FILE__) . '/geo_cert.crt',
-//   CURLOPT_FILE => $fh,
-//   CURLOPT_TIMEOUT_MS => 2000
-// ]);
-
-// if (!curl_errno($curl)) {
-//   $info = curl_getinfo($curl);
-//   // var_dump($info);
-// }
-
-// curl_exec($curl);
-// curl_close($curl);
-// fclose($fh);
-// echo "<img src='$source' />";
 ?>
 <!DOCTYPE html>
 <html lang="en">

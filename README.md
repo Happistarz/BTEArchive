@@ -58,6 +58,12 @@ COORDS
 warps,
 buildeurs
 banner du DEP
+https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_full_page_tabs
+tab avec carrousel d'image du projet
+    desc
+    coords
+nom du fichier = nom du projet + unique index len 3
+
 
 ---
 Page Commune:
@@ -89,3 +95,32 @@ WARP:
 IDPROJET
 NOM
 TYPE (PRINCPAL, SECONDAIRE)
+
+IMAGE:
+ID
+IDPROJET
+SRC
+
+
+---
+Mise en cache Builder et screenshots:
+
+
+SCREENSHOTS: 
+Créez un fichier .htaccess dans le répertoire de vos images (ou utilisez la configuration du serveur web si vous préférez) pour spécifier les en-têtes de mise en cache. Assurez-vous que le module mod_expires est activé sur votre serveur Apache.
+# Active la compression et définit des en-têtes de cache
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+Assurez-vous que le fichier .htaccess est activé sur votre serveur. Vous pouvez le vérifier dans le fichier de configuration d'Apache (httpd.conf) en vous assurant que la directive AllowOverride est définie sur All pour le répertoire concerné.
+
+Lorsque les navigateurs demandent les images, les en-têtes de mise en cache spécifiés dans le fichier .htaccess indiqueront combien de temps ces images doivent être conservées en cache dans le navigateur de l'utilisateur.
+
+BUILDER:
+<img src="URL_DE_L_IMAGE" alt="Image" cache-control="max-age=600">
