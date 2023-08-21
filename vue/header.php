@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <header>
   <link rel="stylesheet" href="style.css">
   <div class="left-header">
@@ -13,6 +14,13 @@
   <div class="right-header">
     <a href="index.php" class="header_link">Accueil</a>
     <a href="insert.php" class='header_link'>Ajouter</a>
+    <?php if (isset($_SESSION['login']) && $_SESSION['logged']===true) {
+        echo "<a href='logout.php' class='header_link' style='color:red;'>DECONNEXION</a>";
+        } else {
+        echo "<a href='login.php' class='header_link'>ADMINISTRATION</a>";
+    } 
+    
+    ?>
   </div>
 </header>
 <script>
