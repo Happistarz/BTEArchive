@@ -1,5 +1,6 @@
 <?php require('controllers/liste.php');
-require_once('models/functions.php') ?>
+require_once('models/functions.php');
+require_once('controllers/RelationPB.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,12 +27,12 @@ require_once('models/functions.php') ?>
 
       foreach ($projets as $projet) {
         $warps = $l->count("WARPS", "idPROJET", $projet['ID']);
-        $builders = $l->count('BUILDEUR', "idPROJET", $projet['ID']);
+        $builders = count(RelationPB::getAllProjectBuilders($projet['ID']));
         $doc[] = "
           <a href='view?p=" . $projet["ID"] . "' class=\"searchcard\">
             <img src=\"src/voulon.png\" alt=\"\">
             <div class=\"text\">
-              <h1>" . $projet['NOM'] . "   <i class='compact-item'><strong>" . $projet['DEPARTEMENT'] . "</strong></i> • <i class='compact-item'>" . ETAT[$projet['ETAT']] . "</i></h1>
+              <h1>" . $projet['NOM'] . "   <i class='compact-item'><strong>" . convertDEP($projet['CODEDEP']) . "</strong></i> • <i class='compact-item'>" . ETAT[$projet['ETAT']] . "</i></h1>
               <p>" . convertDESC($projet['DESCRI'], 200) . "</p>
               <div style='display:flex;flex-direction:row;width:100%;gap:20px'>
                 <p class='PROJET-TAG'>Warps: $warps</p>

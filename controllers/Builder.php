@@ -35,7 +35,7 @@ class Builder extends Connexion
     $builder = parent::read(
       BUILDER_TABLE,
       array(
-        "NOM" => $this->name,
+        "NOM = '{$this->name}'"
       )
     );
     if ($builder) {

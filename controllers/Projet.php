@@ -3,7 +3,6 @@
 require_once("models/Database.php");
 
 
-
 class Projet extends Connexion
 {
     private $id;
@@ -11,18 +10,22 @@ class Projet extends Connexion
     private $desc;
     private $type;
     private $coords;
-    private $departement;
+    private $codedep;
     private $etat;
+    private $urlbanner;
+    private $srcimg;
     private $date;
-    public function __construct($nom, $desc, $type, $coords, $departement, $etat, $date, $id = null)
+    public function __construct($nom, $desc, $type, $coords, $codedep, $etat, $urlbanner, $srcimg, $date, $id = null)
     {
         parent::__construct();
         $this->nom = $nom;
         $this->desc = $desc;
         $this->type = $type;
         $this->coords = $coords;
-        $this->departement = $departement;
+        $this->codedep = $codedep;
         $this->etat = $etat;
+        $this->urlbanner = $urlbanner;
+        $this->srcimg = $srcimg;
         $this->date = $date;
         $this->id = $id;
     }
@@ -49,12 +52,22 @@ class Projet extends Connexion
 
     public function getDep(): string
     {
-        return $this->departement;
+        return $this->codedep;
     }
 
     public function getEtat(): int
     {
         return $this->etat;
+    }
+
+    public function getBanner(): string
+    {
+        return $this->urlbanner;
+    }
+
+    public function getImg()
+    {
+        return $this->srcimg;
     }
 
     public function getDate()
@@ -76,7 +89,7 @@ class Projet extends Connexion
                 "DESCRI" => $this->desc,
                 "TYPE" => $this->type,
                 "COORDS" => $this->coords,
-                "DEPARTEMENT" => $this->departement,
+                "CODEDEP" => $this->codedep,
                 "ETAT" => $this->etat,
                 "DATE" => $this->date
             )
@@ -95,7 +108,7 @@ class Projet extends Connexion
             "DESC" => $this->desc,
             "TYPE" => $this->type,
             "COORDS" => $this->coords,
-            "CODEP" => $this->departement,
+            "CODEP" => $this->codedep,
             "ETAT" => $this->etat,
             "DATE" => $this->date
         ), array("ID" => $this->id));

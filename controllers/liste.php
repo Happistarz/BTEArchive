@@ -10,7 +10,7 @@ class Liste extends Connexion
   }
   public function getProjets($condition = null)
   {
-    $res = $this->read("PROJET", $condition);
+    $res = $this->read("PROJET", array($condition));
     return $res;
   }
   public function getProjetsByRegion($region)

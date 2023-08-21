@@ -5,7 +5,7 @@ define(
   "TYPE_PROJET",
   array(
     0 => 'COMMUNE',
-    1 => 'PROJET',
+    1 => 'MONUMENT',
     2 => 'WARP'
   )
 );
@@ -28,7 +28,7 @@ define('WARP_TABLE', "WARPS");
 
 define('BUILDER_TABLE', "BUILDEUR");
 
-define('IMAGE_TABLE',"IMAGE");
+define('IMAGE_TABLE', "IMAGE");
 /**
  * Connexion class
  * 
@@ -73,6 +73,15 @@ class Connexion
    * @param string $table
    * @param array $data
    * @return int
+   * 
+   * @example
+   * $id = $this->create(
+   * 'users',
+   * array(
+   * 'username' => 'John',
+   * 'password' => '123456'
+   * )
+   * );
    */
   public function create($table, $data)
   {
@@ -98,14 +107,22 @@ class Connexion
    * @param string $orderBy
    * @param int $limit
    * @return array
+   * 
+   * @example
+   * $users = $this->read(
+   * 'users',
+   * array(
+   *  'username = "John"',
+   *  )
+   * );
    */
-  public function read($table, $conditions = array(1 => 1), $orderBy = null, $limit = null)
+  public function read($table, $conditions = array("1 = 1"), $orderBy = null, $limit = null)
   {
-    $conditionsArr = [];
-    foreach ($conditions as $field => $value) {
-      $conditionsArr[] = "{$field} = '$value'";
-    }
-    $where = ' WHERE ' . implode(' AND ', $conditionsArr);
+    // $conditionsArr = [];
+    // foreach ($conditions as $condition) {
+    //   $conditionsArr[] = "$condition";
+    // }
+    $where = ' WHERE ' . implode(' AND ', $conditions);
     $params = [];
 
 
@@ -137,6 +154,17 @@ class Connexion
    * @param array $data
    * @param array $conditions
    * @return bool
+   * 
+   * @example
+   * $this->update(
+   * 'users',
+   * array(
+   * 'username' => 'John',
+   * 'password' => '123456'
+   * ),
+   * array(
+   * 'id' => 1
+   * )
    */
   public function update($table, $data, $conditions)
   {
@@ -174,6 +202,14 @@ class Connexion
    * @param string $table
    * @param array $conditions
    * @return bool
+   * 
+   * @example
+   * $this->delete(
+   * 'users',
+   * array(
+   * 'id' => 1
+   * )
+   * );
    */
   public function delete($table, $conditions)
   {
@@ -204,6 +240,14 @@ class Connexion
    * @param string $key
    * @param string $value
    * @return int
+   * 
+   * @example
+   * $count = $this->count(
+   * 'users',
+   * 'username',
+   * 'John'
+   * );
+   * 
    */
   public function count($table, $key = 1, $value = 1)
   {
@@ -224,13 +268,42 @@ class Connexion
    * @param string $sql
    * 
    * @return array
+   * 
+   * @example
+   * $users = $this->exec(
+   * 'SELECT * FROM users'
+   * );
+   * 
    */
-  public function exec($sql) {
+  public function exec($sql)
+  {
     $stmt = $this->db->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  /**
+   * Execute normal sql request
+   * 
+   * @param string $sql
+   * 
+   * @return array
+   * 
+   * @example
+   * $users = $this->query(
+   * 'SELECT * FROM users'
+   * );
+   * 
+   */
+  public function query($sql)
+  {
+    $stmt = $this->db->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  /**
+   * Close connection
+   */
   public function close()
   {
     $this->db = null;

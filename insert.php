@@ -24,7 +24,7 @@ require 'models/DataBase.php';
 
         <div class="type">
           <input type="button" value="COMMUNE" class='btnactive'>
-          <input type="button" value="PROJET">
+          <input type="button" value="MONUMENT">
           <input type="button" value="WARP">
         </div>
         <div class="item">
@@ -49,6 +49,16 @@ require 'models/DataBase.php';
             <option value="3">Avancé</option>
             <option value="4">Terminé</option>
           </select>
+        </div>
+        <div class="item">
+          <label for="urlimg">L'URL des images</label>
+          <input type="text" name="urlimg" id="urlimg" placeholder='URL des images'>
+        </div>
+        <div class="item">
+          <label for="bannerimg">Bannière du Projet</label>
+          <input type="file" name="bannerimg" id="bannerimg" accept="image/png, image/jpeg">
+          <img src="src/blank.png" alt="" id='bannerimgpreview' width='1520' height='640'
+            style="background:red;border-radius:1.625rem;magin:20px;border:1px solid black">
         </div>
       </div>
       <div class='infocreation buildercreation'>
@@ -134,7 +144,7 @@ require 'models/DataBase.php';
 
       let builder = document.createElement('div');
       builder.classList.add('builder');
-      builder.innerHTML = `<img src="https://minotar.net/helm/${re}/100.png" alt=""><p>${re}</p><span onclick="deleteEL(this);">X</span>`;
+      builder.innerHTML = `<img src="https://minotar.net/helm/${re}/100.png" alt="" cache-control='max-age=600'><p>${re}</p><span onclick="deleteEL(this);">X</span>`;
       document.querySelector('.listebuilder').appendChild(builder);
       builderinput.value = '';
     }
@@ -156,6 +166,25 @@ require 'models/DataBase.php';
   function isEmptyBuilder() {
     listebuilder.length == 0 ? document.querySelector('#default').style.display = 'block' : document.querySelector('#default').style.display = 'none';
   }
+
+  ///// FILE SECTION /////
+
+  var bannerimg = document.querySelector('#bannerimg');
+  var bannerimgpreview = document.querySelector('#bannerimgpreview');
+
+  bannerimg.addEventListener('change', () => {
+    if (bannerimg.files && bannerimg.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        bannerimgpreview.setAttribute('src', e.target.result);
+      }
+
+      reader.readAsDataURL(bannerimg.files[0]);
+    }
+  })
+
+  ///// FORMULAIRE SECTION /////
 
   document.querySelector("#insertform").addEventListener('submit', (e) => {
     e.preventDefault();

@@ -8,7 +8,7 @@ define(
   "PROJET_TYPE",
   array(
     'COMMUNE' => 0,
-    'PROJET' => 1,
+    'MONUMENT' => 1,
     'WARP' => 2
   )
 );
@@ -16,17 +16,20 @@ define(
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   if (isset($_POST['REQUEST'])) {
-
+    print_r($_FILES);
 
     $nom = htmlspecialchars($_POST['nom']);
     $desc = htmlspecialchars($_POST['desc']);
     $etat = htmlspecialchars($_POST['etat']);
     $warp = htmlspecialchars($_POST['warp']);
+    $codep = htmlspecialchars($_POST['dep']);
+    $bannerimg = $_FILES['bannerimg'];
+    $srcimg = htmlspecialchars($_POST['urlimg']);
     $type = PROJET_TYPE[$_POST['type']];
 
     //// cURL SESSION
 
-    $curl = curl_init("https://geo.api.gouv.fr/communes?nom=Poitiers&fields=code,nom,mairie,centre,siren,codeDepartement,departement,codeRegion,codesPostaux,population,region");
+    $curl = curl_init("https://geo.api.gouv.fr/communes?nom=$nom+$codep&fields=code,nom,mairie,centre,siren,codeDepartement,departement,codeRegion,codesPostaux,population,region");
 
     # Set options on the session
     curl_setopt_array($curl, [
@@ -51,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     curl_close($curl);
     // var_dump($data);
     $coords = $data[0]['centre']['coordinates'][0] . "," . $data[0]['centre']['coordinates'][1];
-    $deparement = $data[0]['codeDepartement'];
+    $codedep = $data[0]['codeDepartement'];
 
     //////// CREER UNE NOUVELLE TABLE QUI CONTIENT: 
     /*RelationPB:
@@ -65,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     */
 
     //// CREATION DU PROJET
-
-    $projet = new Projet($nom, $desc, $type, $coords, $deparement, $etat, date("Y-m-d"));
+    die();
+    $projet = new Projet($nom, $desc, $coords, $type, $codedep, $etat, "", $srcimg, date("Y-m-d"));
     try {
       $idP = $projet->insertProject();
       echo '{"success": true, "id": "' . $idP . '"}';
@@ -96,6 +99,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       }
     }
 
+  } else {
+    header("Location: index.php");
+  }
+} else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+  if (isset($_GET['count']) && $_GET['count']) {
+    $db = new Connexion();
+    $res = $db->exec("SELECT MIN(ID) as min, MAX(ID) as max FROM " . PROJET_TABLE);
+    echo '{"success": true, "min": ' . $res[0]['min'] . ', "max": ' . $res[0]['max'] . '}';
   } else {
     header("Location: index.php");
   }

@@ -13,6 +13,7 @@
   <div class="right-header">
     <a href="index.php" class="header_link">Accueil</a>
     <a href="insert.php" class='header_link'>Ajouter</a>
+    <a href="" class='header_link'>Random</a>
   </div>
 </header>
 <script>
@@ -36,5 +37,21 @@
   window.addEventListener('DOMContentLoaded', () => {
     header.style.transform = 'translateY(0)';
     header.style.opacity = '1';
+  });
+  var random_btn = document.querySelector('.right-header a:nth-child(3)');
+  random_btn.addEventListener('click', () => {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'enregistrement.php?count=true', true);
+    xhr.onload = function () {
+      if (this.status == 200) {
+        var result = JSON.parse(this.responseText);
+        console.log(result);
+        if (result.success) {
+          var random = Math.floor(Math.random() * (result.max - result.min + 1) + result.min);
+          window.location.href = 'view.php?p=' + random;
+        }
+      }
+    }
+    xhr.send();
   });
 </script>

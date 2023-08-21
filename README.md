@@ -64,10 +64,7 @@ tab avec carrousel d'image du projet
     coords
 nom du fichier = nom du projet + unique index len 3
 
-
----
-Page Commune:
-banner du DEP
+icon du DEP
 carte google map
 info de la ville
 liste des warps + nb warp
@@ -77,7 +74,6 @@ nb de buildeur + liste des buildeurs,
 # ORGA TABLE
 BUILDEUR:
 ID
-IDPROJET
 NOM
 URLICON
 

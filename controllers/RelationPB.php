@@ -2,6 +2,8 @@
 
 require_once("models/Database.php");
 
+
+
 class RelationPB extends Connexion
 {
   private $id;
@@ -30,9 +32,8 @@ class RelationPB extends Connexion
     $relationPB = parent::read(
       RELATIONPB_TABLE,
       array(
-        "ID" => $this->id,
-        "IDPROJET" => $this->idProjet,
-        "IDBUILDEUR" => $this->idBuilder
+        "IDPROJET = {$this->idProjet}",
+        "IDBUILDEUR = {$this->idBuilder}"
       )
     );
     if ($relationPB) {
@@ -42,8 +43,7 @@ class RelationPB extends Connexion
         RELATIONPB_TABLE,
         array(
           "IDPROJET" => $this->idProjet,
-          "IDBUILDEUR" => $this->idBuilder,
-          "ID" => $this->id
+          "IDBUILDEUR" => $this->idBuilder
         )
       );
     }
@@ -55,7 +55,7 @@ class RelationPB extends Connexion
     return parent::delete(
       RELATIONPB_TABLE,
       array(
-        "ID" => $this->id
+        "ID = {$this->id}"
       )
     );
   }
@@ -65,11 +65,11 @@ class RelationPB extends Connexion
     return parent::update(
       RELATIONPB_TABLE,
       array(
-        "IDPROJET" => $this->idProjet,
-        "IDBUILDEUR" => $this->idBuilder
+        "IDPROJET = '{$this->idProjet}'",
+        "IDBUILDEUR = '{$this->idBuilder}'"
       ),
       array(
-        "ID" => $this->id
+        "ID = {$this->id}"
       )
     );
   }
@@ -79,7 +79,7 @@ class RelationPB extends Connexion
     return parent::read(
       RELATIONPB_TABLE,
       array(
-        "ID" => $this->id
+        "ID = {$this->id}",
       )
     );
   }
@@ -89,6 +89,30 @@ class RelationPB extends Connexion
     return parent::read(
       RELATIONPB_TABLE
     );
+  }
+
+  public static function getAllProjectBuilders($idprojet)
+  {
+    $db = new Connexion();
+    $res = $db->read(
+      RELATIONPB_TABLE,
+      array(
+        "ID = {$idprojet}",
+      )
+    );
+    return $res;
+  }
+
+  public static function getAllBuilderProjects($idbuilder)
+  {
+    $db = new Connexion();
+    $res = $db->read(
+      RELATIONPB_TABLE,
+      array(
+        "IDBUILDEUR = '$idbuilder'"
+      )
+    );
+    return $res;
   }
 }
 
