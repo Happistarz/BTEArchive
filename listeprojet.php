@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         break;
     }
     $sql .= " LIMIT " . $_GET['limit'] . " OFFSET " . $_GET['start'] . ";";
+    // echo $sql;
     $db = new Connexion();
     $res = $db->query($sql);
 

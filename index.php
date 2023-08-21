@@ -75,7 +75,7 @@ require('vue/header.php'); ?>
               cards.innerHTML += element;
             });
           } else {
-            var body = document.querySelector('body');
+            var body = document.querySelector('.cards');
             body.innerHTML = "<h1>Erreur: " + result.error + "</h1>";
           }
         }
@@ -90,7 +90,7 @@ require('vue/header.php'); ?>
 
   window.addEventListener('DOMContentLoaded', (event) => {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'listeprojet.php?start=0&limit=' + limit, true);
+    xhr.open('GET', 'listeprojet.php?tag=TOUT&start=0&limit=' + limit, true);
     xhr.onload = function () {
       if (this.status == 200) {
         var result = JSON.parse(this.responseText);
@@ -102,7 +102,7 @@ require('vue/header.php'); ?>
             cards.innerHTML += element;
           });
         } else {
-          var body = document.querySelector('body');
+          var body = document.querySelector('.cards');
           body.innerHTML = "<h1>Erreur: " + result.error + "</h1>";
         }
       }

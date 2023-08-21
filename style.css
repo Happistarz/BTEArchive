@@ -127,6 +127,10 @@ header .right-header {
   transition-timing-function: ease-out;
 }
 
+.header_link_red:before {
+  background: #d12020 !important;
+}
+
 .header_link:hover,
 .header_link:focus,
 .header_link:active {
@@ -577,4 +581,49 @@ header .right-header {
   padding: 20px;
   background-color: #b3d4fc;
   border-radius: 1.3rem;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 400px;
+  border-radius: 1.625rem;
+  box-shadow: 10px 10px 38px #e7e7e7,
+    -10px -10px 38px #cacaca;
+  margin: 30px 0;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+}
+
+.login input:not([type="submit"]) {
+  font-size: 20px;
+  background-color: #ebebeb;
+  border: none;
+  border-radius: 1.4rem;
+  padding: 15px 20px;
+  width: 80%;
+  margin: 20px 0;
+}
+
+.login input:last-child {
+  background-color: #008fd1;
+  color: white;
+  font-size: 20px;
+  border: none;
+  border-radius: 1.4rem;
+  padding: 15px 20px;
+  width: 30%;
+  height: 50px;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+}
+
+.login input:last-child:hover {
+  background-color: #006bb3;
 }
