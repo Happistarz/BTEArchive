@@ -16,7 +16,6 @@ define(
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   if (isset($_POST['REQUEST'])) {
-    print_r($_FILES);
 
     $nom = htmlspecialchars($_POST['nom']);
     $desc = htmlspecialchars($_POST['desc']);
@@ -68,8 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     */
 
     //// CREATION DU PROJET
-    die();
-    $projet = new Projet($nom, $desc, $coords, $type, $codedep, $etat, "", $srcimg, date("Y-m-d"));
+    $srcbanner = "banner/banner_" . strtolower($nom) . "_$codep.png";
+    $projet = new Projet($nom, $desc, $coords, $type, $codedep, $etat, $srcbanner, $srcimg, date("Y-m-d"));
     try {
       $idP = $projet->insertProject();
       echo '{"success": true, "id": "' . $idP . '"}';
@@ -97,6 +96,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $r = new RelationPB($idP, $idB);
         $r->insertRelationPB();
       }
+    }
+
+    //// CREATION DE LA BANNIERE
+    if ($bannerimg['type'] == "image/png") {
+      $banner = imagecreatefrompng($bannerimg['tmp_name']);
+      $banner = imagescale($banner, 1920, 1080);
+      imagepng($banner, $srcbanner);
+    } else if ($bannerimg['type'] == "image/jpeg") {
+      $banner = imagecreatefromjpeg($bannerimg['tmp_name']);
+      $banner = imagescale($banner, 1920, 1080);
+      imagejpeg($banner, $srcbanner);
+    } else {
+      echo '{"success":false, "error": "banner is not a png"}';
+      die();
     }
 
   } else {

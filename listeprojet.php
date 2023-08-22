@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $tag = $_GET['tag'];
 
-    $sql = "SELECT * FROM " . PROJET_TABLE;
+    $sql = "SELECT p.*,(SELECT COUNT(*) FROM " . RELATIONPB_TABLE . " rp WHERE rp.IDPROJET = p.ID) AS NB_BUILDEURS FROM " . PROJET_TABLE . " p";
     switch ($tag) {
       case 'TOUT':
         break;
@@ -48,12 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       </div>
       <div class=\"card-footer\">
       <p>" . ETAT[$resu['ETAT']] . "</p>
-      <p>" . $resu['CODEDEP'] . " " . convertDEP((int) $resu['CODEDEP']) . "</p>
-      <p>👷‍♂️" . count(RelationPB::getAllProjectBuilders($resu['ID'])) . "</p>
+      <p>" . $resu['CODEDEP'] . " " . convertDEP($resu['CODEDEP']) . "</p>
+      <p>👷‍♂️" . $resu['NB_BUILDEURS'] . "</p>
       </div>
       </a>";
       }
-      $nextbutton = "<button class=\"next\" onclick=\"next()\">Suivant</button>";
+      $nextbutton = "<button class=\\\"next\\\" onclick=\\\"next()\\\">Suivant</button>";
       echo '{"success": true, "card": ' . json_encode($card) . ', "nextbutton": "' . $nextbutton . '"}';
     } else {
       echo '{"success": false, "error": "no project found"}';

@@ -1,34 +1,5 @@
 <?php
 require('models/Database.php');
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <?php require('vue/loader.php');
-    require('vue/header.php') ?>
-    <main class="loginmain">
-        <form action="" method="post" class="login">
-            <h1>ADMINISTRATION</h1>
-            <hr style="width:60%;background:blue;height:2px">
-            <input type="text" name="login" id="login" required placeholder="Identifiant">
-            <input type="password" name="password" id="password" required placeholder="Mot de passe">
-            <input type="submit" value="Se connecter" name="submit">
-            <?php if (isset($loginError)) {
-                echo "<p style='color:red;text-align:center;'>$loginError</p>";
-            } ?>
-        </form>
-    </main>
-</body>
-
-</html>
-<?php
 
 if (isset($_POST['submit'])) {
 
@@ -47,7 +18,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['logged'] = true;
             $_SESSION['login'] = $res[0]['LOGIN'];
             header('Location: index.php');
-            // exit();
+            exit();
         } else {
             $loginError = "Login ou mot de passe incorrect";
         }
@@ -55,3 +26,30 @@ if (isset($_POST['submit'])) {
 }
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <?php //require('vue/loader.php');
+    require('vue/header.php') ?>
+    <main class="loginmain">
+        <form action="" method="post" class="login">
+            <h1>ADMINISTRATION</h1>
+            <hr style="width:60%;background:blue;height:2px">
+            <input type="text" name="login" id="login" required placeholder="Identifiant">
+            <input type="password" name="password" id="password" required placeholder="Mot de passe">
+            <input type="submit" value="Se connecter" name="submit">
+            <?php if (isset($loginError)) {
+                echo "<p style='color:red;text-align:center;'>$loginError</p>";
+            } ?>
+        </form>
+    </main>
+</body>
+
+</html>

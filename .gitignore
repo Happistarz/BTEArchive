@@ -1,5 +1,9 @@
 # CakePHP 3
 
+banner/
+cache/
+
+
 /vendor/*
 /config/app.php
 

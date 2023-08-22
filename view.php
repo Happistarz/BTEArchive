@@ -1,9 +1,9 @@
 <?php
-// require("controllers/Projet.php");
-// require("controllers/Builder.php");
-// require('controllers/RelationPB.php');
-// require('models/functions.php');
- ?>
+require("controllers/Projet.php");
+require("controllers/Builder.php");
+require('controllers/RelationPB.php');
+require('models/functions.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,16 +16,21 @@
 
 <body>
   <?php
-//   require('vue/loader.php');
-//   require('vue/header.php');
 
-//   if (isset($_GET['p'])) {
-//     $id = $_GET['p'];
+  if (isset($_GET['p'])) {
+    $id = $_GET['p'];
 
-//     // $db = new Connexion();
-//     // $res = $db->read(PROJET_TABLE, array("ID = $id"));
+    $db = new Connexion();
+    $res = $db->read(PROJET_TABLE, array("ID = $id"));
 
-//     // if ($res) {
+    if ($res) {
+      $projet = new Projet($res[0]["NOM"], $res[0]["DESCRI"], $res[0]["TYPE"], $res[0]["COORDS"], $res[0]['CODEDEP'], $res[0]["ETAT"], $res[0]['URLBANNER'], $res[0]['SRCIMG'], $res[0]["DATE"]);
+    } else {
+      echo "<main class='listemain'><h1> Pas de projet trouvé </h1></main>";
+      die();
+    }
+
+    //     // if ($res) {
 //     //   $projet = new Projet($res[0]["NOM"], $res[0]["DESCRI"], $res[0]["TYPE"], $res[0]["COORDS"], $res[0]['CODEDEP'], $res[0]["ETAT"], $res[0]['URLBANNER'], $res[0]['SRCIMG'], $res[0]["DATE"]);
 //     //   $builders = RelationPB::getAllProjectBuilders($id);
 //     //   foreach ($builders as $builder) {
@@ -39,30 +44,42 @@
 //     // }
 //   } else {
 //     echo "<main class='listemain'><h1> Pas de projet trouvé </h1></main>";
-//   }
+  }
 
 
-
+  require('vue/loader.php');
+  require('vue/header.php');
   ?>
   <div class="mainproj">
     <!-- <h1 >Anché</h1> -->
-    <div class="content" >
+    <div class="content">
 
-        <div class="col">
-            <div class="row">
-                <div class="projet">
-                    <img src="test1a.jpg" alt="" class="logodep" width="200" heigth="200">
-                    <div class="infoproj">
-                        <h1 class="title">Anché</h1>
-                        <p>86 Vienne</p>
-                    </div>
-                </div>
-                <p class='descri'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora velit architecto nostrum veniam, distinctio, vero tenetur doloremque nihil beatae facilis quas delectus laborum eos, tempore necessitatibus sapiente totam voluptatibus? Est!</p>
+      <div class="col">
+        <div class="row">
+          <div class="projet">
+            <img src="<?php echo convertGEO($projet->getDep()); ?>" alt="" class="logodep" width="200" heigth="200">
+            <div class="infoproj">
+              <h1 class="title">
+                <?php echo $projet->getnom(); ?>
+              </h1>
+              <h4>
+                <?php echo $projet->getDep() . " " . convertDEP($projet->getDep()); ?>
+              </h4>
             </div>
-            <div class="row frame">
-                <div style='width:542px;height:375px;background:yellow;border-radius:1.625rem'></div> <!-- A REPLACE PAR L'IFRAME -->
-            </div>
+          </div>
+          <p class='descri'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora velit architecto nostrum
+            veniam, distinctio, vero tenetur doloremque nihil beatae facilis quas delectus laborum eos, tempore
+            necessitatibus sapiente totam voluptatibus? Est!</p>
         </div>
+        <div class="row frame">
+          <!-- <div style='width:542px;height:375px;background:yellow;border-radius:1.625rem'></div> -->
+          <iframe width="600" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+            sandbox="allow-forms allow-scripts allow-same-origin"
+            src="https://www.geoportail.gouv.fr/embed/visu.html?c=<?php echo $projet->getCoords(); ?>&z=16&v0=PLAN.IGN::GEOPORTAIL:GPP:TMS(1;s:classique)&l1=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2::GEOPORTAIL:OGC:WMTS(0.87)&permalink=yes"
+            allowfullscreen></iframe>
+          <!-- A REPLACE PAR L'IFRAME -->
+        </div>
+      </div>
     </div>
   </div>
 

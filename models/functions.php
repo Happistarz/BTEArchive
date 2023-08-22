@@ -35,7 +35,7 @@ function getSeparator()
 function convertGEO($codep)
 {
   $src = $codep . "-logo.png";
-  return "<img src='src/LOGODEPFR/icones-300px/$src' />";
+  return "src/LOGODEPFR/icones-300px/" . $src;
 }
 
 function convertDEP(string $codedep)

@@ -1,5 +1,4 @@
-<?php session_start();
-print_r($_SESSION); ?>
+<?php //session_start(); ?>
 <header>
   <link rel="stylesheet" href="style.css">
   <div class="left-header">
@@ -16,7 +15,7 @@ print_r($_SESSION); ?>
     <a href="index.php" class="header_link">Accueil</a>
     <a href="" class="header_link">RANDOM</a>
     <?php if (isset($_SESSION['login']) && $_SESSION['logged']) {
-        echo "<a href='insert.php' class='header_link'>Ajouter</a>'";
+      echo "<a href='insert.php' class='header_link'>Ajouter</a>";
       echo "<a href='logout.php' class='header_link header_link_red' style='border-bottom:1px solid red;'>Déconnexion</a>";
     } else {
       echo "<a href='login.php' class='header_link'>ADMINISTRATION</a>";
