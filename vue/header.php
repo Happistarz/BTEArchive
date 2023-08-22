@@ -14,9 +14,9 @@ print_r($_SESSION); ?>
   </div>
   <div class="right-header">
     <a href="index.php" class="header_link">Accueil</a>
-    <a href="insert.php" class='header_link'>Ajouter</a>
     <a href="" class="header_link">RANDOM</a>
     <?php if (isset($_SESSION['login']) && $_SESSION['logged']) {
+        echo "<a href='insert.php' class='header_link'>Ajouter</a>'";
       echo "<a href='logout.php' class='header_link header_link_red' style='border-bottom:1px solid red;'>Déconnexion</a>";
     } else {
       echo "<a href='login.php' class='header_link'>ADMINISTRATION</a>";
@@ -45,7 +45,7 @@ print_r($_SESSION); ?>
     header.style.transform = 'translateY(0)';
     header.style.opacity = '1';
   });
-  var random_btn = document.querySelector('.right-header a:nth-child(3)');
+  var random_btn = document.querySelector('.right-header a:nth-child(2)');
   random_btn.addEventListener('click', () => {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'enregistrement.php?count=true', true);
