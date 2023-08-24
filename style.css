@@ -575,7 +575,7 @@ header .right-header {
   width: 100%;
   height: 340px;
   max-height: 340px;
-  text-align: center;
+  text-align: left !important;
 }
 
 .card .card-footer p {
@@ -727,5 +727,5 @@ header .right-header {
   position: absolute;
   right: 50%;
   transform: translate(50%, 0);
-
+  border: none;
 }

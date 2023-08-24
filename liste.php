@@ -1,4 +1,4 @@
-<?php require('controllers/liste.php');
+<?php require('models/Database.php');
 require_once('models/functions.php');
 require_once('controllers/RelationPB.php'); ?>
 <!DOCTYPE html>
@@ -14,9 +14,21 @@ require_once('controllers/RelationPB.php'); ?>
   <?php require('vue/loader.php');
   require('vue/header.php');
 
-  $l = new Liste();
+  $l = new Connexion();
   $search = $_GET['search'];
-  $projets = $l->getProjets("NOM LIKE '%$search%'");
+  // search peut etre un code de dep donc il a des exceptions comme: 2A, 2B, 971, 972, 973, 974, 976
+  if (strlen($search) == 2 || (strlen($search) == 3 && is_numeric($search))) {
+    // DEP CODE
+    $projets = $l->read(PROJET_TABLE, array("CODEDEP LIKE '%$search%'"));
+  } else if (strlen($search) == 5) {
+    // INSEE CODE
+    $projets = $l->read(COMMUNE_TABLE, array("INSEE LIKE '%$search%'"));
+  } else {
+    // NOM
+    $projets = $l->read(PROJET_TABLE, array("NOM LIKE '%$search%'"));
+  }
+
+
   ?>
   <main class="listemain">
     <?php

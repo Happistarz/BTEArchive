@@ -29,6 +29,8 @@ define('WARP_TABLE', "WARPS");
 define('BUILDER_TABLE', "BUILDEUR");
 
 define('IMAGE_TABLE', "IMAGE");
+
+define("COMMUNE_TABLE", "COMMUNE");
 /**
  * Connexion class
  * 

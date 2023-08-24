@@ -7,22 +7,23 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   if (isset($_GET['tag'])) {
 
     $tag = $_GET['tag'];
+    $sort = $_GET['sort'];
 
     $sql = "SELECT p.*,(SELECT COUNT(*) FROM " . RELATIONPB_TABLE . " rp WHERE rp.IDPROJET = p.ID) AS NB_BUILDEURS FROM " . PROJET_TABLE . " p";
     switch ($tag) {
       case 'TOUT':
         break;
       case 'ETAT':
-        $sql .= " ORDER BY ETAT DESC";
+        $sql .= " ORDER BY ETAT " . $sort;
         break;
       case 'TYPE':
-        $sql .= " ORDER BY TYPE DESC";
+        $sql .= " ORDER BY TYPE " . $sort;
         break;
       case 'DEPARTEMENT':
-        $sql .= " ORDER BY CODEDEP DESC";
+        $sql .= " ORDER BY CODEDEP " . $sort;
         break;
       case 'NOMBRE DE BUILDEURS':
-        $sql .= " ORDER BY NB_BUILDEURS DESC";
+        $sql .= " ORDER BY NB_BUILDEURS " . $sort;
         break;
       default:
         break;
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       </div>
       </a>";
       }
-      $nextbutton = "<button class=\\\"next\\\" onclick=\\\"next()\\\">Suivant</button>";
+      $nextbutton = "<button class=\\\"next\\\" onclick=\\\"next()\\\">V</button>";
       echo '{"success": true, "card": ' . json_encode($card) . ', "nextbutton": "' . $nextbutton . '"}';
     } else {
       echo '{"success": false, "error": "no project found"}';

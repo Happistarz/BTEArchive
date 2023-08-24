@@ -118,13 +118,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 } else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if (isset($_GET['count']) && $_GET['count']) {
     $db = new Connexion();
-    $res = $db->exec("SELECT MIN(ID) as min, MAX(ID) as max FROM " . PROJET_TABLE);
-    echo '{"success": true, "min": ' . $res[0]['min'] . ', "max": ' . $res[0]['max'] . '}';
+    $res = $db->exec("SELECT * FROM " . PROJET_TABLE . " ORDER BY RAND() LIMIT 1;");
+    echo '{"success": true, "projet": ' . json_encode($res) . '}';
   } else {
     header("Location: index.php");
   }
 } else {
-  header("Location: index.php");
+  // header("Location: index.php");
 }
 
 ?>

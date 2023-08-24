@@ -72,12 +72,21 @@ require('models/functions.php');
             necessitatibus sapiente totam voluptatibus? Est!</p>
         </div>
         <div class="row frame">
-          <!-- <div style='width:542px;height:375px;background:yellow;border-radius:1.625rem'></div> -->
-          <iframe width="600" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+          <div style='width:542px;height:375px;background:yellow;border-radius:1.625rem'></div>
+          <!-- <iframe width="600" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
             sandbox="allow-forms allow-scripts allow-same-origin"
-            src="https://www.geoportail.gouv.fr/embed/visu.html?c=<?php echo $projet->getCoords(); ?>&z=16&v0=PLAN.IGN::GEOPORTAIL:GPP:TMS(1;s:classique)&l1=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2::GEOPORTAIL:OGC:WMTS(0.87)&permalink=yes"
-            allowfullscreen></iframe>
+            src="https://www.geoportail.gouv.fr/embed/visu.html?c=<?php //echo $projet->getCoords(); ?>&z=16&v0=PLAN.IGN::GEOPORTAIL:GPP:TMS(1;s:classique)&l1=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2::GEOPORTAIL:OGC:WMTS(0.87)&permalink=yes"
+            allowfullscreen></iframe> -->
           <!-- A REPLACE PAR L'IFRAME -->
+        </div>
+      </div>
+      <div class="warps-container">
+        <h1>Warps</h1>
+        <div class="warps">
+          <h3 class="libelle">/warp Loudun</h3>
+        </div>
+        <div class="warp">
+          <h3 class="libelle">/warp Loudun:Eglise</h3>
         </div>
       </div>
     </div>

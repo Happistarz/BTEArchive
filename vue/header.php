@@ -45,7 +45,8 @@
     header.style.opacity = '1';
   });
   var random_btn = document.querySelector('.right-header a:nth-child(2)');
-  random_btn.addEventListener('click', () => {
+  random_btn.addEventListener('click', (e) => {
+    e.preventDefault();
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'enregistrement.php?count=true', true);
     xhr.onload = function () {
@@ -53,8 +54,7 @@
         var result = JSON.parse(this.responseText);
         console.log(result);
         if (result.success) {
-          var random = Math.floor(Math.random() * (result.max - result.min + 1) + result.min);
-          window.location.href = 'view.php?p=' + random;
+          window.location.href = 'view.php?p=' + result.projet[0].ID;
         }
       }
     }
