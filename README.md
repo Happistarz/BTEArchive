@@ -1,6 +1,6 @@
 # BTEArchive
 
-BTEArchive est une idée de site d'archive pour le projet BTE France sur Minecraft. Se site ne sera pas en ligne, c'était un projet pour tester mes compétences en BTS SIO 1ère année. (Lien vers BTE France)[https://buildtheearth.net/bte-france]
+BTEArchive est une idée de site d'archive pour le projet BTE France sur Minecraft. Se site ne sera pas en ligne, c'était un projet pour tester mes compétences en BTS SIO 1ère année. [Lien vers BTE France](https://buildtheearth.net/bte-france)
 
 **Le Reste du README est un TODO Liste**
 
